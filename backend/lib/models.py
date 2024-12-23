@@ -8,7 +8,7 @@ from sqlalchemy import (
     DateTime, 
     ForeignKey,
     )
-from database import Base
+from lib.database import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -22,11 +22,11 @@ class User(Base):
     # Allows you to see all GameSessions recorded by this User
     game_sessions = relationship("GameSession", back_populates="recorder")
 
-class GameSession(Base):
-    __tablename__ = "game_sessions"
+class ExerciseSession(Base):
+    __tablename__ = "exercise_sessions"
     id = Column(Integer, primary_key=True, index=True)
     date_created = Column(DateTime, default=datetime.datetime.now)
-    recorded_by = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     
     # Allows you to access the User who recorded this session
     recorder = relationship("User", back_populates="game_sessions")
