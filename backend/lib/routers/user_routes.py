@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-import lib.models as models
+import backend.lib.models.models as models
 from main import db_dependency
 from main import UserBase
 
