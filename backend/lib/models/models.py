@@ -19,8 +19,8 @@ class User(Base):
     password = Column(String(250))
     date_created = Column(DateTime, default=datetime.datetime.now)
     
-    # Allows you to see all GameSessions recorded by this User
-    game_sessions = relationship("GameSession", back_populates="recorder")
+    # Allows you to see all ExerciseSession recorded by this User
+    exercise_sessions = relationship("ExerciseSession", back_populates="recorder")
 
 class ExerciseSession(Base):
     __tablename__ = "exercise_sessions"
@@ -29,4 +29,4 @@ class ExerciseSession(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     
     # Allows you to access the User who recorded this session
-    recorder = relationship("User", back_populates="game_sessions")
+    recorder = relationship("User", back_populates="exercise_sessions")

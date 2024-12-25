@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
-import backend.lib.models.models as models
+import lib.models.models as models
 from main import db_dependency, UserBase
 
-user_router = APIRouter()
+session_router = APIRouter()
 
 # Create a new user
 

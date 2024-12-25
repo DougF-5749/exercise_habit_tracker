@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
-import backend.lib.models.models as models
-from main import db_dependency
-from main import UserBase
+import lib.models.models as models
+from lib.dependencies import db_dependency
+from lib.schemas.user_schema import UserBase
+
 
 user_router = APIRouter(
     prefix="/users", # a URL prefix that will be applied to all routes/endpoints defined within this router

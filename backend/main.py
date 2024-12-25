@@ -1,30 +1,13 @@
-from datetime import datetime
-from fastapi import FastAPI, Depends
-from pydantic import BaseModel
-from typing import Annotated
-import backend.lib.models.models as models
-from lib.database import engine, SessionLocal
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
+
+from lib.database import engine
 from lib.routers.user_routes import user_router
+from lib.database import Base
 
 app = FastAPI()
 
 # create tables in database
-models.Base.metadata.create_all(bind=engine)
-
-class GameSessionBase(BaseModel):
-    date_created: datetime
-    recorded_by: int
-
-# database connection
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-db_dependency = Annotated[Session, Depends(get_db)]
+Base.metadata.create_all(bind=engine)
 
 # Routes: Abstract to routes folder/files and import into main.py
 app.include_router(user_router)
