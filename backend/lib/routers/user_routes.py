@@ -24,7 +24,7 @@ async def get_user(user_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-# Fetch a loggerd in user
+# Fetch a logged in user
 @user_router.get("/my_profile", status_code=status.HTTP_200_OK, response_model=UserBase)
 # async def get_user(user_id: int, db: db_dependency):
 #     user = db.query(models.User).filter(models.User.id == user_id).first()

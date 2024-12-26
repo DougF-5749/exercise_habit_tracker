@@ -11,3 +11,8 @@ class UserBase(BaseModel):
 # Note: UserIn inherits from UserBase
 class UserIn(UserBase):
     password: str
+
+class LoginFormData(BaseModel):
+    username: str
+    password: str
+    model_config = {'extra': 'forbid'}
