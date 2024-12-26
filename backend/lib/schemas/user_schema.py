@@ -15,4 +15,5 @@ class UserIn(UserBase):
 class LoginFormData(BaseModel):
     username: str
     password: str
+    # restrict the form fields to only those declared in the Pydantic model
     model_config = {'extra': 'forbid'}
