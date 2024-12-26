@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 import lib.models.models as models
 from lib.dependencies import db_dependency
-from lib.schemas.user_schema import UserBase
+from lib.schemas.user_schema import UserIn, UserBase
 
 
 user_router = APIRouter(
@@ -11,13 +11,13 @@ user_router = APIRouter(
 
 # Create a new user
 @user_router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_user(user: UserBase, db: db_dependency):
+async def create_user(user: UserIn, db: db_dependency):
     db_user = models.User(**user.model_dump())
     db.add(db_user)
     db.commit()
 
 # Fetch a user by ID
-@user_router.get("/{user_id}", status_code=status.HTTP_200_OK)
+@user_router.get("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserBase)
 async def get_user(user_id: int, db: db_dependency):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if user is None:
@@ -25,7 +25,7 @@ async def get_user(user_id: int, db: db_dependency):
     return user
 
 # Fetch a loggerd in user
-@user_router.get("/my_profile", status_code=status.HTTP_200_OK)
+@user_router.get("/my_profile", status_code=status.HTTP_200_OK, response_model=UserBase)
 # async def get_user(user_id: int, db: db_dependency):
 #     user = db.query(models.User).filter(models.User.id == user_id).first()
 #     if user is None:
