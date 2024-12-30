@@ -1,12 +1,12 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Form
 import lib.models.models as models
 from lib.dependencies import db_dependency
 from lib.schemas.user_schema import UserIn, UserBase
-
+from lib.schemas.user_schema import LoginFormData
 
 user_router = APIRouter(
     prefix="/users", # a URL prefix that will be applied to all routes/endpoints defined within this router
-    tags=["users"] # All routes in this router will be grouped under the “items” tag in the automatically generated documentation
+    tags=["users"] # All routes in this router will be grouped under the users tag in the automatically generated documentation
     )
 
 # Create a new user
@@ -40,3 +40,10 @@ async def delete_user(user_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="User not found")
     db.delete(user)
     db.commit()
+
+@user_router.post("/token")
+async def login(data: LoginFormData = Form(...)):
+    return data
+# The ... is a shorthand way to tell FastAPI that a field is required. 
+# It’s equivalent to setting Form(required=True)
+# If the client does not provide the field in the request, FastAPI will return an error (HTTP status code 422 Unprocessable Entity

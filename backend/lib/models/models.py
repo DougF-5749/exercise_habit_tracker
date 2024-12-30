@@ -17,6 +17,7 @@ class User(Base):
     first_name = Column(String(50))
     last_name = Column(String(50))
     password = Column(String(250))
+    # profile_picture = Column(String(250))
     date_created = Column(DateTime, default=datetime.datetime.now)
     
     # Allows you to see all ExerciseSession recorded by this User

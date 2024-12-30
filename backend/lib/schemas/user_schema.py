@@ -6,7 +6,7 @@ class UserBase(BaseModel):
     first_name: str | None = None
     last_name: str | None = None
     date_created: datetime
-    profile_picture: str | None = None
+    # profile_picture: str | None = None
 
 # Note: UserIn is used to create a new user
 # Note: UserIn inherits from UserBase
