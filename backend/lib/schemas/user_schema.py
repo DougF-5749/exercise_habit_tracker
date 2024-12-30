@@ -13,6 +13,9 @@ class UserBase(BaseModel):
 class UserIn(UserBase):
     password: str
 
+class UserOut(UserBase):
+    id: int
+
 class LoginFormData(BaseModel):
     username: str
     password: str

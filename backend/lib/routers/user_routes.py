@@ -1,8 +1,9 @@
 from fastapi import APIRouter, HTTPException, status, Form
 import lib.models.models as models
 from lib.dependencies import db_dependency
-from lib.schemas.user_schema import UserIn, UserBase
+from lib.schemas.user_schema import UserIn, UserBase, UserOut
 from lib.schemas.user_schema import LoginFormData
+from lib.security import get_password_hash, authenticate_user
 
 user_router = APIRouter(
     prefix="/users", # a URL prefix that will be applied to all routes/endpoints defined within this router
@@ -12,6 +13,11 @@ user_router = APIRouter(
 # Create a new user
 @user_router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserIn, db: db_dependency):
+    # ToDO: Create crud operations for the User model and replace the query below with a call to the get_user_by_username function
+    existing_user = db.query(models.User).filter(models.User.username == user.username).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+    user.password = get_password_hash(user.password)
     db_user = models.User(**user.model_dump())
     db.add(db_user)
     db.commit()
