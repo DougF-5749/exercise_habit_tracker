@@ -5,7 +5,7 @@ class UserBase(BaseModel):
     username: str
     first_name: str | None = None
     last_name: str | None = None
-    date_created: datetime
+    date_created: datetime | None = None
     # profile_picture: str | None = None
 
 # Note: UserIn is used to create a new user
@@ -21,3 +21,10 @@ class LoginFormData(BaseModel):
     password: str
     # restrict the form fields to only those declared in the Pydantic model
     model_config = {'extra': 'forbid'}
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str | None = None

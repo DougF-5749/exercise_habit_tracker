@@ -4,7 +4,7 @@ from fastapi import Depends
 from typing import Annotated
 from lib.database import SessionLocal
 
-def get_db() -> Generator[Session, None, None]:
+def get_db():
     """Database session generator for dependency injection."""
     db = SessionLocal()
     try:
